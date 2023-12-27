@@ -37,6 +37,10 @@ class ZkEVMDB {
         this.vm = vm;
     }
 
+    async updateChainID(chainID) {
+        this.chainID = chainID;
+    }
+
     /**
      * Return a new Processor with the current RollupDb state
      * @param {Number} timestamp - Timestamp of the batch
