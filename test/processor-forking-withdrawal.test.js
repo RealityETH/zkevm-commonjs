@@ -36,7 +36,7 @@ describe('Processor', function () {
     let pathProcessorTests;
 
     if (argv.e2eForking) {
-        pathProcessorTests = path.join(pathTestVectors, 'end-to-end-forking/state-transition.json');
+        pathProcessorTests = path.join(pathTestVectors, 'end-to-end-forking-bridging/state-transition.json');
     } else if (argv.e2e) {
         pathProcessorTests = path.join(pathTestVectors, 'end-to-end/state-transition.json');
     } else if (argv.blockinfo) {
@@ -81,7 +81,6 @@ describe('Processor', function () {
                 timestamp,
                 bridgeDeployed,
                 chainID,
-                newChainID,
                 forkID,
             } = testVectors[i];
 
@@ -147,8 +146,6 @@ describe('Processor', function () {
             } else {
                 testVectors[i].expectedOldRoot = smtUtils.h4toString(zkEVMDB.stateRoot);
             }
-
-            zkEVMDB.updateChainID(newChainID);
 
             /*
              * build, sign transaction and generate rawTxs
@@ -389,7 +386,7 @@ describe('Processor', function () {
             console.log(`Completed test ${i + 1}/${testVectors.length}`);
             if (update) {
                 await fs.writeFileSync(pathProcessorTests, JSON.stringify(testVectors, null, 2));
-                const pathProcessorOutputSnark = path.join(pathTestVectors, 'end-to-end-forking/outputSnark.json');
+                const pathProcessorOutputSnark = path.join(pathTestVectors, 'end-to-end-forking-bridging/outputSnark.json');
                 fs.writeFileSync(pathProcessorOutputSnark, JSON.stringify(snarkInput, null, 2));
             }
 
@@ -633,9 +630,9 @@ describe('Processor', function () {
             console.log(`Completed test ${i + 1}/${testVectors.length}`);
         }
         if (update) {
-            pathProcessorTests = path.join(pathTestVectors, 'end-to-end-forking/state-transition2.json');
+            pathProcessorTests = path.join(pathTestVectors, 'end-to-end-forking-bridging/state-transition2.json');
             await fs.writeFileSync(pathProcessorTests, JSON.stringify(testVectors, null, 2));
-            const pathProcessorOutputSnark = path.join(pathTestVectors, 'end-to-end-forking/outputSnark2.json');
+            const pathProcessorOutputSnark = path.join(pathTestVectors, 'end-to-end-forking-bridging/outputSnark2.json');
             fs.writeFileSync(pathProcessorOutputSnark, JSON.stringify(snarkInput, null, 2));
         }
     });
